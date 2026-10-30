@@ -34,42 +34,55 @@
 <body class="text-slate-800 antialiased flex flex-col min-h-screen">
 
     <!-- Topbar Promo Kecil -->
-    <!-- Ganti bg-blue-600 jadi bg-dv-main -->
     <div class="bg-dv-main text-white text-xs font-semibold text-center py-2.5 tracking-wide">
         ✨ Gratis Ongkir untuk wilayah Kota Padang (S&K Berlaku)
     </div>
 
     <!-- Header / Navbar Utama -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between gap-4">
 
-            <!-- Logo -->
+            <!-- Logo (Diuperbesar dan Warna Diperjelas) -->
             <a href="/" class="flex-shrink-0">
-                <!-- Ganti nama file kalau logo barunya beda -->
-                <img src="{{ asset('images/logo-dv-barra.jpg') }}" alt="DV BARRA" class="h-10 md:h-12 w-auto object-contain mix-blend-multiply transition-transform hover:scale-105">
+                <img src="{{ asset('images/logo-dv-barra.jpg') }}" alt="DV BARRA" class="h-14 md:h-16 w-auto object-contain transition-transform hover:scale-105">
             </a>
 
             <!-- Search Bar (Tengah) -->
-            <div class="hidden md:flex flex-1 max-w-2xl relative">
-                <!-- Fokus border jadi dv-main -->
-                <input type="text" placeholder="Cari skincare, makeup, atau paket bundling..." class="w-full pl-5 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-dv-bg focus:border-dv-main focus:bg-white transition-all shadow-sm">
-                <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
-                    <svg class="w-5 h-5 text-dv-main opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </div>
+            <form action="{{ route('katalog') }}" method="GET" class="hidden md:flex flex-1 max-w-2xl relative">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari skincare, makeup, atau paket bundling..." class="w-full pl-5 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-dv-bg focus:border-dv-main focus:bg-white transition-all shadow-sm">
+                <button type="submit" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                    <svg class="w-5 h-5 text-dv-main opacity-70 hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+            </form>
+
+            <!-- Menu Kanan Dinamis -->
+            <div class="flex items-center gap-4 flex-shrink-0">
+                @auth
+                    <!-- Jika User Sudah Login -->
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm font-bold text-slate-700">Halo, {{ Auth::user()->name }}</span>
+                        @if(Auth::user()->role === 'admin')
+                            <a href="{{ url('/pesanan') }}" class="text-xs font-bold text-white bg-slate-800 px-3 py-2 rounded-lg hover:bg-slate-700">Panel Admin</a>
+                        @endif
+                        <form action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="text-xs font-bold text-red-500 hover:text-red-700 transition-colors">Logout</button>
+                        </form>
+                    </div>
+                @else
+                    <!-- Jika Belum Login -->
+                    <a href="{{ route('login') }}" class="text-sm font-bold text-slate-600 hover:text-dv-main transition-colors">Masuk</a>
+                    <a href="{{ route('register') }}" class="hidden md:block text-sm font-bold text-white bg-dv-main px-5 py-2.5 rounded-full hover:bg-dv-dark transition-colors shadow-md shadow-dv-main/30">Daftar</a>
+                @endauth
             </div>
 
-            <!-- Menu Kanan -->
-            <div class="flex items-center gap-5 flex-shrink-0">
-                <a href="/login" class="text-sm font-bold text-slate-600 hover:text-dv-main transition-colors">Masuk</a>
-                <a href="/login" class="hidden md:block text-sm font-bold text-white bg-dv-main px-5 py-2.5 rounded-full hover:bg-dv-dark transition-colors shadow-md shadow-dv-main/30">Daftar</a>
-            </div>
-        </div>
-    </header>
+        </div> <!-- Penutup Max-Width Nav -->
+    </header> <!-- Penutup Header -->
 
-    <!-- Konten Utama -->
-    <main class="flex-grow pb-24">
+    <!-- Konten Utama (Jarak bawah diperlebar agar tidak tertimpa keranjang) -->
+    <main class="flex-grow pb-36 md:pb-40">
 
-        <!-- Banner Kustom Warna DV BARRA -->
+        <!-- Banner Promo -->
         <div class="max-w-7xl mx-auto px-4 md:px-6 mt-6 md:mt-8">
             <div class="w-full bg-gradient-to-r from-dv-dark via-dv-main to-dv-light rounded-3xl flex flex-col md:flex-row items-center justify-between p-8 md:p-12 overflow-hidden relative shadow-lg shadow-dv-main/20">
                 <!-- Ornamen Latar -->
@@ -82,7 +95,7 @@
                     <button class="px-8 py-3.5 bg-white text-dv-dark font-extrabold text-sm rounded-full hover:scale-105 transition-transform shadow-lg">Belanja Sekarang</button>
                 </div>
 
-                <!-- Ilustrasi/Gambar Banner -->
+                <!-- Gambar Promo -->
                 <div class="w-full md:w-2/5 flex justify-center md:justify-end relative z-10">
                     <div class="w-full max-w-[240px] aspect-[4/3] bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center text-white/70 shadow-inner">
                         <span class="text-sm font-medium tracking-wide">[ Area Foto Produk Promo ]</span>
@@ -114,7 +127,6 @@
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
 
                 @forelse($produks as $item)
-                <!-- Hover border pakai dv-bg (biru muda banget) -->
                 <div class="bg-white rounded-2xl border border-slate-100 hover:border-dv-main/30 hover:shadow-[0_8px_30px_rgb(43,90,142,0.08)] transition-all duration-300 flex flex-col relative overflow-hidden group cursor-pointer">
 
                     <!-- Badge Diskon Otomatis -->
@@ -162,15 +174,12 @@
                             <div class="flex items-center justify-between">
                                 <div class="font-extrabold text-slate-800 text-lg">Rp {{ number_format($item->harga, 0, ',', '.') }}</div>
                                 
-                                <!-- TOMBOL FORM TAMBAH KERANJANG -->
                                 <form action="{{ route('keranjang.tambah', $item->id) }}" method="POST">
                                     @csrf
-                                    <!-- Tombol pakai warna dv-bg dan dv-main -->
                                     <button type="submit" class="w-8 h-8 rounded-full bg-dv-bg/50 text-dv-main flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-dv-main hover:text-white shadow-sm hover:shadow-dv-main/30 cursor-pointer">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                                     </button>
                                 </form>
-
                             </div>
                         </div>
                     </div>
@@ -188,11 +197,11 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (Logo diperjelas dan ukuran lebih pas) -->
     <footer class="bg-white border-t border-slate-200 mt-12 py-10">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('images/logo-dv-barra.jpg') }}" alt="DV BARRA" class="h-8 w-auto object-contain mix-blend-multiply grayscale opacity-50">
+                <img src="{{ asset('images/logo-dv-barra.jpg') }}" alt="DV BARRA" class="h-12 md:h-14 w-auto object-contain">
                 <p class="text-sm font-medium text-slate-400">&copy; 2026 DV BARRA Beauty Choices.</p>
             </div>
             <div class="flex items-center gap-6 text-sm font-medium text-slate-400">
@@ -205,10 +214,9 @@
 
     <!-- Keranjang Melayang -->
     <div class="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50">
-        <a href="/keranjang" class="flex items-center justify-center w-14 h-14 bg-dv-main text-white rounded-full shadow-2xl hover:bg-dv-dark transition-transform hover:scale-110 relative group border-2 border-white">
+        <a href="{{ route('keranjang') }}" class="flex items-center justify-center w-14 h-14 bg-dv-main text-white rounded-full shadow-2xl hover:bg-dv-dark transition-transform hover:scale-110 relative group border-2 border-white">
             @php $jumlahKeranjang = collect(session('keranjang', []))->sum('jumlah'); @endphp
             @if($jumlahKeranjang > 0)
-                <!-- Badge merah tetap dipertahankan agar terlihat menonjol -->
                 <div class="absolute -top-1.5 -right-1.5 min-w-[22px] h-[22px] px-1.5 bg-red-500 text-white text-[10px] font-extrabold rounded-full flex items-center justify-center border-2 border-white shadow-sm">{{ $jumlahKeranjang }}</div>
             @endif
             <svg class="w-6 h-6 group-hover:-rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>

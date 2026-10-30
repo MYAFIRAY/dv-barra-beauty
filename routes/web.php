@@ -7,6 +7,7 @@ use App\Http\Controllers\PesananController;
 use App\Http\Controllers\AdminPesananController;
 use App\Http\Controllers\AdminPengirimanController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,6 @@ Route::get('/pengaturan/metode-pembayaran', fn () => view('admin.pengaturan.meto
 Route::get('/pengaturan/pengiriman', fn () => view('admin.pengaturan.pengiriman'));
 Route::get('/pengaturan/notifikasi', fn () => view('admin.pengaturan.notifikasi'));
 Route::get('/pengaturan/backup', fn () => view('admin.pengaturan.backup'));
+
+//owner
+Route::get('/owner/dashboard', [OwnerController::class, 'index'])->name('owner.dashboard');

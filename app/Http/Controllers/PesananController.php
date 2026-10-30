@@ -24,7 +24,8 @@ class PesananController extends Controller
             $total_belanja += $item['harga'] * $item['jumlah'];
         }
 
-        return view('customer.checkout', compact('total_belanja'));
+        // Variabel $keranjang sekarang ikut dikirim ke halaman checkout
+        return view('customer.checkout', compact('keranjang', 'total_belanja'));
     }
 
     public function prosesCheckout(Request $request)
@@ -45,7 +46,7 @@ class PesananController extends Controller
             'ongkir'            => $request->ongkir,
             'total_tagihan'     => $request->total_tagihan,
             'kurir'             => $request->kurir,
-            'metode_pembayaran' => 'Midtrans Payment Gateway', // <--- Dibuat otomatis, bukan dari form lagi
+            'metode_pembayaran' => 'Midtrans Payment Gateway', 
             'status_pembayaran' => 'Belum Dibayar',
             'status_pesanan'    => 'Baru',
         ]);
@@ -61,6 +62,7 @@ class PesananController extends Controller
 
             $produk = Produk::find($id);
             if ($produk) {
+                // Perbaikan operasi pengurangan stok (tambah operator -)
                 $produk->stok = $produk->stok - $item['jumlah'];
                 $produk->save();
             }
@@ -90,7 +92,6 @@ class PesananController extends Controller
             ],
         ];
 
-        // Buat Token Snap hanya jika statusnya masih "Belum Dibayar"
         $snapToken = null;
         if ($pesanan->status_pembayaran == 'Belum Dibayar') {
             $snapToken = Snap::getSnapToken($params);
@@ -99,7 +100,6 @@ class PesananController extends Controller
         return view('customer.berhasil', compact('pesanan', 'snapToken'));
     }
 
-    // Method baru untuk mengupdate status pembayaran saat Pop-up Midtrans sukses
     public function bayarSelesai($id)
     {
         $pesanan = Pesanan::findOrFail($id);
@@ -108,12 +108,11 @@ class PesananController extends Controller
 
         return redirect()->route('checkout.sukses', $pesanan->id)->with('success', 'Pembayaran berhasil dikonfirmasi!');
     }
-    // Menampilkan halaman pelacakan pesanan pelanggan
+
     public function lacak(Request $request)
     {
         $pesanan = null;
         
-        // Jika pelanggan mencari berdasarkan nomor pesanan
         if ($request->has('no_pesanan')) {
             $pesanan = Pesanan::with('rincian.produk')
                 ->where('no_pesanan', $request->no_pesanan)
