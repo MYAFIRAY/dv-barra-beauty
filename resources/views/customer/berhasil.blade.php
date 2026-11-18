@@ -85,19 +85,21 @@
     </div>
 
     @if($pesanan->status_pembayaran == 'Belum Dibayar')
-    <script type="text/javascript">
+    <script>
         var payButton = document.getElementById('pay-button');
-        payButton.addEventListener('click', function () {
-            window.snap.pay('{{ $snapToken }}', {
-                onSuccess: function(result){
-                    // Kalau sukses, otomatis arahkan ke rute update status
-                    window.location.href = "{{ route('checkout.bayarselesai', $pesanan->id) }}";
-                },
-                onPending: function(result){ alert("Menunggu pembayaran kamu..."); location.reload(); },
-                onError: function(result){ alert("Pembayaran gagal!"); },
-                onClose: function(){ alert('Kamu menutup halaman pembayaran sebelum selesai.'); }
+        if (payButton) {
+            payButton.addEventListener('click', function () {
+                window.snap.pay('{{ $snapToken }}', {
+                    onSuccess: function(result){
+                        // Diperbaiki menggunakan underscore (_) sesuai route web.php
+                        window.location.href = "{{ route('checkout.bayar_selesai', $pesanan->id) }}";
+                    },
+                    onPending: function(result){ alert("Menunggu pembayaran kamu..."); location.reload(); },
+                    onError: function(result){ alert("Pembayaran gagal!"); },
+                    onClose: function(){ alert('Kamu menutup halaman pembayaran sebelum selesai.'); }
+                });
             });
-        });
+        }
     </script>
     @endif
 </body>

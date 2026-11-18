@@ -22,8 +22,9 @@
         </a>
     </div>
 
-    <!-- Form Container -->
-    <form action="#" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Form Container (Route action dan method POST sudah diset) -->
+    <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        @csrf <!-- WAJIB ADA DI LARAVEL -->
         
         <!-- Kolom Kiri: Informasi Produk (Porsi 2/3) -->
         <div class="lg:col-span-2 space-y-6">
@@ -34,7 +35,7 @@
                     <!-- Nama Produk -->
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Nama Produk</label>
-                        <input type="text" placeholder="Masukkan Nama Produk" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
+                        <input type="text" name="nama_produk" required placeholder="Masukkan Nama Produk" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
                     </div>
 
                     <!-- Grid Harga & Stok -->
@@ -45,19 +46,19 @@
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                     <span class="text-slate-400 font-bold">Rp</span>
                                 </div>
-                                <input type="number" placeholder="0" class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
+                                <input type="number" name="harga" required placeholder="0" class="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
                             </div>
                         </div>
                         <div>
                             <label class="block text-sm font-bold text-slate-700 mb-2">Stok Produk</label>
-                            <input type="number" placeholder="Masukkan Jumlah Stok" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
+                            <input type="number" name="stok" required placeholder="Masukkan Jumlah Stok" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
                         </div>
                     </div>
 
-                    <!-- Kategori / Jenis Produk (Tambahan untuk logika Bundling) -->
+                    <!-- Kategori / Jenis Produk -->
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Jenis Penjualan</label>
-                        <select class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium appearance-none cursor-pointer">
+                        <select name="jenis" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium appearance-none cursor-pointer">
                             <option value="satuan">Produk Satuan</option>
                             <option value="bundling">Paket Bundling</option>
                         </select>
@@ -66,7 +67,7 @@
                     <!-- Deskripsi Produk -->
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Deskripsi Produk</label>
-                        <textarea rows="4" placeholder="Masukkan Deskripsi Produk" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400 resize-none"></textarea>
+                        <textarea name="deskripsi" rows="4" placeholder="Masukkan Deskripsi Produk" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400 resize-none"></textarea>
                     </div>
                 </div>
             </div>
@@ -83,8 +84,8 @@
                     <span class="text-sm font-bold text-blue-700">Tambah Gambar Produk</span>
                     <span class="text-xs font-medium text-slate-500 mt-1">Klik untuk memilih gambar</span>
                     
-                    <!-- Input File Hidden (Agar bisa diklik seluruh areanya) -->
-                    <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                    <!-- Input File Hidden -->
+                    <input type="file" name="gambar" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                 </div>
                 
                 <p class="text-[11px] text-slate-400 mt-4 font-medium">Format: JPG, PNG, atau JPEG. Maksimal 2MB.</p>

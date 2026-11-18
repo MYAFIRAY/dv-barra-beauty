@@ -3,74 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masuk Akun - DV BARRA Beauty</title>
+    <title>Login - DV BARRA Beauty</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                extend: {
-                    colors: {
-                        'dv-main': '#2b5a8e',
-                        'dv-dark': '#1a3e6c',
-                        'dv-bg': '#dbe8f6',
-                    }
-                }
+                extend: { colors: { 'dv-main': '#2b5a8e', 'dv-dark': '#1a3e6c', 'dv-bg': '#dbe8f6' } }
             }
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style> body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; } </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4 text-slate-800 relative overflow-x-hidden">
-
-    <div class="fixed top-[-10%] left-[-10%] w-[500px] h-[500px] bg-dv-bg rounded-full mix-blend-multiply filter blur-[80px] opacity-70 pointer-events-none"></div>
-
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-[0_8px_32px_rgba(43,90,142,0.08)] border border-slate-100 p-8 md:p-10 relative z-10">
+<body class="text-slate-800 antialiased flex items-center justify-center min-h-screen p-4">
+    
+    <div class="bg-white max-w-md w-full rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(43,90,142,0.08)] p-8">
         
+        <!-- Logo & Heading -->
         <div class="text-center mb-8">
-            <img src="{{ asset('images/logo-dv-barra.jpg') }}" alt="DV BARRA" class="h-10 mx-auto object-contain mix-blend-multiply mb-4">
-            <h1 class="text-2xl font-extrabold text-slate-800 tracking-tight">Selamat Datang Kembali</h1>
-            <p class="text-sm font-medium text-slate-500 mt-1">Masuk ke akun kamu untuk melanjutkan belanja</p>
+            <img src="{{ asset('images/logo-dv-barra.jpg') }}" alt="DV BARRA" class="h-14 w-auto mx-auto mb-4 object-contain">
+            <h1 class="text-2xl font-extrabold text-slate-800">Selamat Datang!</h1>
+            <p class="text-sm font-medium text-slate-500">Masuk ke sistem DV BARRA Beauty.</p>
         </div>
 
-        @if(session('success'))
-            <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 text-sm rounded-xl font-bold">
-                {{ session('success') }}
-            </div>
-        @endif
-
+        <!-- Alert Error -->
         @if($errors->any())
-            <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl font-medium">
+            <div class="mb-6 p-4 bg-red-50 text-red-600 text-sm font-bold rounded-xl border border-red-100 text-center">
                 {{ $errors->first() }}
             </div>
         @endif
 
-        <form action="{{ route('login.proses') }}" method="POST" class="space-y-5">
+        <!-- Form Login -->
+        <form action="{{ route('login') }}" method="POST" class="space-y-5">
             @csrf
             <div>
-                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Email Address</label>
-                <input type="email" name="email" value="{{ old('email') }}" required placeholder="nama@email.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-dv-main focus:bg-white font-medium text-slate-700 transition-all">
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Alamat Email</label>
+                <input type="email" name="email" value="{{ old('email') }}" required placeholder="Contoh: owner@dvbarra.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-dv-main transition-colors">
             </div>
-
             <div>
-                <div class="flex justify-between items-center mb-2">
-                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider">Password</label>
-                    <a href="{{ route('lupa-password') }}" class="text-xs font-bold text-dv-main hover:underline">Lupa Password?</a>
-                </div>
-                <input type="password" name="password" required placeholder="••••••••" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:border-dv-main focus:bg-white font-medium text-slate-700 transition-all">
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Password</label>
+                <input type="password" name="password" required placeholder="Masukkan password" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-dv-main transition-colors">
             </div>
-
-            <button type="submit" class="w-full py-4 bg-dv-main text-white font-extrabold text-sm rounded-xl shadow-lg shadow-dv-main/30 hover:bg-dv-dark transition-transform hover:scale-[1.01] cursor-pointer">
+            <button type="submit" class="w-full py-3.5 bg-dv-main text-white font-extrabold text-sm rounded-xl hover:bg-dv-dark shadow-lg shadow-dv-main/30 transition-transform hover:scale-[1.02]">
                 Masuk Sekarang
             </button>
         </form>
-
-        <div class="mt-8 text-center border-t border-slate-100 pt-6">
-            <p class="text-sm font-medium text-slate-500">
-                Belum punya akun? <a href="{{ route('register') }}" class="font-bold text-dv-main hover:underline">Daftar Akun Baru</a>
-            </p>
+        
+        <div class="mt-8 pt-6 border-t border-slate-100 text-center">
+            <a href="{{ route('katalog') }}" class="text-sm font-bold text-slate-400 hover:text-dv-main transition-colors flex items-center justify-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Kembali ke Katalog
+            </a>
         </div>
 
     </div>
+
 </body>
 </html>

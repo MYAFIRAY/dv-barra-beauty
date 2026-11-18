@@ -18,7 +18,7 @@
             <div class="flex items-center gap-2">
                 <span class="px-5 py-2.5 bg-blue-100 text-blue-700 font-bold text-sm rounded-xl">Pesanan Siap Kirim</span>
             </div>
-            <form action="{{ route('admin.pengiriman') }}" method="GET" class="relative w-full md:w-64 flex-shrink-0">
+            <form action="{{ route('admin.pengiriman.index') }}" method="GET" class="relative w-full md:w-64 flex-shrink-0">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pesanan;
 use App\Models\Produk;
-use App\Models\DetailPesanan; // <--- Diperbaiki jadi DetailPesanan sesuai foldermu
+use App\Models\PesananDetail; // <--- Diperbaiki sesuai nama file asli di projectmu
 use Illuminate\Support\Facades\DB;
 
 class OwnerController extends Controller
@@ -32,8 +32,8 @@ class OwnerController extends Controller
         // 3. Tabel Riwayat Pesanan
         $pesananTerbaru = $queryPesanan->orderBy('created_at', 'desc')->paginate(10);
 
-        // 4. Produk Terlaris (Best Seller) menggunakan model DetailPesanan
-        $produkTerlaris = DetailPesanan::select('produk_id', DB::raw('SUM(jumlah) as total_terjual'))
+        // 4. Produk Terlaris (Best Seller) menggunakan model PesananDetail
+        $produkTerlaris = PesananDetail::select('produk_id', DB::raw('SUM(jumlah) as total_terjual'))
             ->groupBy('produk_id')
             ->orderBy('total_terjual', 'desc')
             ->take(5)
@@ -51,5 +51,23 @@ class OwnerController extends Controller
             'tanggalMulai',
             'tanggalSelesai'
         ));
+    }
+
+    public function laporan(Request $request)
+    {
+        $tanggalMulai = $request->input('tanggal_mulai');
+        $tanggalSelesai = $request->input('tanggal_selesai');
+
+        // Hanya ambil pesanan yang sudah dibayar untuk laporan keuangan
+        $query = Pesanan::where('status_pembayaran', 'Sudah Dibayar')->with('rincian.produk');
+
+        if ($tanggalMulai && $tanggalSelesai) {
+            $query->whereBetween('created_at', [$tanggalMulai . ' 00:00:00', $tanggalSelesai . ' 23:59:59']);
+        }
+
+        $laporan = $query->orderBy('created_at', 'desc')->get();
+        $totalPendapatan = $laporan->sum('total_tagihan');
+
+        return view('owner.laporan', compact('laporan', 'totalPendapatan', 'tanggalMulai', 'tanggalSelesai'));
     }
 }

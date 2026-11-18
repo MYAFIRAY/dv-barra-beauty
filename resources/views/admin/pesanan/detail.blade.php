@@ -7,14 +7,14 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-sm text-slate-500 font-medium mb-1">
-                <a href="{{ route('admin.pesanan') }}" class="hover:text-blue-600 transition-colors">Pesanan</a>
+                <a href="{{ route('admin.pesanan.index') }}" class="hover:text-blue-600 transition-colors">Pesanan</a>
                 <span>/</span>
                 <span class="text-blue-600 font-bold">Detail {{ $pesanan->no_pesanan }}</span>
             </div>
             <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight">Rincian Pesanan</h1>
         </div>
         
-        <a href="{{ route('admin.pesanan') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl shadow-sm hover:bg-slate-50 transition-colors">
+        <a href="{{ route('admin.pesanan.index') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl shadow-sm hover:bg-slate-50 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Kembali
         </a>
@@ -115,7 +115,7 @@
             <div class="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] border border-slate-100 p-6">
                 <h3 class="font-bold text-sm text-slate-500 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">Update Resi & Status</h3>
                 
-                <form action="{{ route('admin.pesanan.update', $pesanan->id) }}" method="POST" class="space-y-4">
+                <form action="{{ route('admin.pesanan.updateStatus', $pesanan->id) }}" method="POST"> class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase mb-2">Status Pesanan</label>
