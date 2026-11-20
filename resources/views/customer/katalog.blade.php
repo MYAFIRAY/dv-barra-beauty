@@ -162,13 +162,51 @@
                 </div>
             </div>
         </div>
+        <!-- Keunggulan DV BARRA -->
+<div class="max-w-7xl mx-auto px-4 md:px-8 mt-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-dv-bg flex items-center justify-center text-2xl">
+                ✨
+            </div>
+            <div>
+                <h4 class="font-bold text-dv-dark text-sm">Produk Berkualitas</h4>
+                <p class="text-xs text-slate-500 mt-1">Pilihan skincare dan kosmetik untukmu.</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-dv-bg flex items-center justify-center text-2xl">
+                🛍️
+            </div>
+            <div>
+                <h4 class="font-bold text-dv-dark text-sm">Belanja Praktis</h4>
+                <p class="text-xs text-slate-500 mt-1">Pilih produk favorit dengan mudah.</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 shadow-soft border border-slate-100 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-dv-bg flex items-center justify-center text-2xl">
+                💙
+            </div>
+            <div>
+                <h4 class="font-bold text-dv-dark text-sm">Pelayanan Terbaik</h4>
+                <p class="text-xs text-slate-500 mt-1">Kenyamanan belanja jadi prioritas kami.</p>
+            </div>
+        </div>
+
+    </div>
+</div>
         <!-- Filter Kategori Elegan -->
         <div class="max-w-7xl mx-auto px-4 md:px-8 mt-16">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
                 <div>
                     <h3 class="font-serif text-3xl font-bold text-dv-dark">Koleksi Kami</h3>
                     <p class="text-sm text-slate-500 mt-1">Pilih kategori produk yang sesuai dengan kebutuhan Anda</p>
+                    <p class="text-xs text-dv-main mt-2 font-medium">
+    ✨ Rawat dirimu dengan produk pilihan, tampil percaya diri setiap hari.
+</p>
                 </div>
                 
                <!-- Area Tombol Kategori -->
@@ -286,6 +324,64 @@
 
             </div>
         </div>
+        <!-- Promo Penutup Katalog -->
+<div class="max-w-7xl mx-auto px-4 md:px-8 mt-16">
+    <div class="bg-gradient-to-r from-dv-dark to-dv-main rounded-3xl p-8 md:p-12 text-center text-white shadow-xl">
+
+        <h3 class="font-serif text-2xl md:text-3xl font-bold mb-3">
+            Saatnya Memanjakan Dirimu!
+        </h3>
+
+        <p class="text-sm md:text-base text-blue-100 max-w-xl mx-auto leading-relaxed">
+            Temukan produk kecantikan favoritmu dan jadikan setiap hari
+            sebagai kesempatan untuk tampil lebih percaya diri.
+        </p>
+
+        <p class="mt-5 text-xs font-semibold tracking-widest uppercase text-blue-200">
+            DV BARRA Beauty Choices
+        </p>
+
+    </div>
+</div>
+<!-- Mengapa Memilih DV BARRA -->
+<div class="max-w-7xl mx-auto px-4 md:px-8 mt-16 mb-16">
+
+    <div class="text-center mb-8">
+        <h3 class="font-serif text-2xl md:text-3xl font-bold text-dv-dark">
+            Mengapa Memilih DV BARRA?
+        </h3>
+
+        <p class="text-sm text-slate-500 mt-2">
+            Lebih dari sekadar belanja, temukan pengalaman merawat diri.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-3xl mb-3">💗</div>
+            <h4 class="font-bold text-dv-dark mb-2">
+                Pilihan untuk Kecantikanmu
+            </h4>
+            <p class="text-sm text-slate-500 leading-relaxed">
+                Temukan berbagai pilihan skincare dan kosmetik
+                untuk melengkapi kebutuhan kecantikanmu.
+            </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-100 shadow-soft">
+            <div class="text-3xl mb-3">🌸</div>
+            <h4 class="font-bold text-dv-dark mb-2">
+                Belanja dengan Nyaman
+            </h4>
+            <p class="text-sm text-slate-500 leading-relaxed">
+                Nikmati pengalaman berbelanja yang praktis,
+                mudah, dan menyenangkan bersama DV BARRA.
+            </p>
+        </div>
+
+    </div>
+</div>
     </main>
 
     <!-- Footer Premium -->
