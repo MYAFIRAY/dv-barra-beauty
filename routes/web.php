@@ -140,7 +140,27 @@ Route::middleware(['auth'])->group(function () {
     // PRODUK
     // ==========================================
 
+   // ==========================================
+    // PRODUK
+    // ==========================================
+
     Route::get('/produk', [AdminProdukController::class, 'index'])
+        ->name('admin.produk.index');
+
+    Route::get('/produk/create', [AdminProdukController::class, 'create'])
+        ->name('admin.produk.create');
+
+    Route::post('/produk/store', [AdminProdukController::class, 'store'])
+        ->name('admin.produk.store');
+
+    Route::get('/produk/{id}/edit', [AdminProdukController::class, 'edit'])
+        ->name('admin.produk.edit');
+
+    Route::put('/produk/{id}', [AdminProdukController::class, 'update'])
+        ->name('admin.produk.update');
+
+    Route::delete('/produk/{id}', [AdminProdukController::class, 'destroy'])
+        ->name('admin.produk.destroy'); Route::get('/produk', [AdminProdukController::class, 'index'])
         ->name('admin.produk.index');
 
     Route::get('/produk/create', [AdminProdukController::class, 'create'])
@@ -197,6 +217,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/pengaturan', [PengaturanController::class, 'adminIndex'])
         ->name('admin.pengaturan.index');
+        // ==========================================
+    // PENGATURAN UTAMA ADMIN
+    // ==========================================
+
+    Route::get('/pengaturan', [PengaturanController::class, 'adminIndex'])
+        ->name('admin.pengaturan.index');
+
+    Route::post('/pengaturan', [PengaturanController::class, 'adminUpdate'])
+        ->name('admin.pengaturan.update');
 
 
     // ==========================================

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends(auth()->user()->role === 'owner' ? 'layouts.owner' : 'layouts.app')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
@@ -7,7 +7,7 @@
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
             <div class="flex items-center gap-2 text-sm text-slate-500 font-medium mb-1">
-                <a href="/pengaturan" class="hover:text-blue-600 transition-colors">Pengaturan</a>
+                <a href="{{ auth()->user()->role === 'owner' ? route('owner.pengaturan.index') : route('admin.pengaturan.index') }}" class="hover:text-blue-600 transition-colors">Pengaturan</a>
                 <span>/</span>
                 <span class="text-blue-600 font-bold">Keamanan</span>
             </div>
@@ -15,30 +15,43 @@
             <p class="text-slate-500 mt-1 font-medium">Jaga keamanan akun Anda dengan pengaturan berikut.</p>
         </div>
         
-        <a href="/pengaturan" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl shadow-sm hover:bg-slate-50 transition-colors">
+        <a href="{{ auth()->user()->role === 'owner' ? route('owner.pengaturan.index') : route('admin.pengaturan.index') }}" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl shadow-sm hover:bg-slate-50 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             Kembali
         </a>
     </div>
 
+    @if(session('success'))
+        <div class="p-4 bg-green-50 border border-green-200 text-green-700 text-sm rounded-2xl font-bold">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-2xl font-bold">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     <!-- Form Ubah Password -->
     <div class="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] border border-slate-100 p-8">
         <h3 class="text-lg font-bold text-slate-800 border-b border-slate-100 pb-4 mb-6 text-blue-600">Ubah Password</h3>
         
-        <form action="#" class="space-y-5 max-w-xl">
+        <form action="{{ auth()->user()->role === 'owner' ? route('owner.pengaturan.update') : route('admin.pengaturan.update') }}" method="POST" class="space-y-5 max-w-xl">
+            @csrf
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Password Lama</label>
-                <input type="password" placeholder="Masukkan Password Lama" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
+                <input type="password" name="current_password" required placeholder="Masukkan Password Lama" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
             </div>
             
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Password Baru</label>
-                <input type="password" placeholder="Masukkan Password Baru" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
+                <input type="password" name="password" required placeholder="Masukkan Password Baru (min. 6 karakter)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
             </div>
 
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Konfirmasi Password</label>
-                <input type="password" placeholder="Konfirmasi Password Baru" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
+                <input type="password" name="password_confirmation" required placeholder="Konfirmasi Password Baru" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-800 font-medium placeholder-slate-400">
             </div>
 
             <div class="pt-4">
