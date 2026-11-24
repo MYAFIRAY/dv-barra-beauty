@@ -69,6 +69,11 @@
                             <div class="flex-grow">
                                 <h3 class="font-bold text-slate-800 text-sm md:text-base leading-snug mb-1">{{ $details['nama_produk'] }}</h3>
                                 <p class="font-extrabold text-dv-main text-sm md:text-base mb-3">Rp {{ number_format($details['harga'], 0, ',', '.') }}</p>
+                              <a href="{{ route('produk.detail', $id) }}"
+   class="inline-block text-xs font-bold text-dv-main hover:text-dv-dark mb-3">
+    Lihat Detail Produk →
+</a>
+
                                 
                                 <div class="flex items-center justify-between">
                                     

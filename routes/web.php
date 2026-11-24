@@ -12,7 +12,7 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\AdminManagerController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\DashboardController;
-
+use App\Http\Controllers\Owner\LaporanExportController;
 /*
 |--------------------------------------------------------------------------
 | Halaman Publik (Bebas Akses: Katalog, Keranjang, Checkout, Lacak)
@@ -62,7 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/owner/laporan', [OwnerController::class, 'laporan'])->name('owner.laporan');
     Route::get('/owner/pengaturan', [PengaturanController::class, 'index'])->name('owner.pengaturan.index');
     Route::post('/owner/pengaturan', [PengaturanController::class, 'update'])->name('owner.pengaturan.update');
-
+    Route::get('/laporan/export-excel', [LaporanExportController::class, 'excel'])
+    ->name('owner.laporan.excel');
 
     // ==========================================
     // PANEL ADMIN KASIR
@@ -96,5 +97,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pengaturan/notifikasi', [PengaturanController::class, 'notifikasi'])->name('admin.pengaturan.notifikasi');
     Route::get('/pengaturan/keamanan', [PengaturanController::class, 'keamanan'])->name('admin.pengaturan.keamanan');
     Route::get('/pengaturan/backup', [PengaturanController::class, 'backup'])->name('admin.pengaturan.backup');
-
+    Route::get('/produk/{id}/detail', [KatalogController::class, 'detail'])
+    ->name('produk.detail');
 });
