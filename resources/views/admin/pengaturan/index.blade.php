@@ -1,4 +1,4 @@
-@extends('layouts.app') <!-- Sesuaikan nama layout sidebar kasir kamu -->
+@extends('layouts.app')
 
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6">
@@ -7,17 +7,29 @@
         <p class="text-slate-500 mt-1 font-medium">Kelola profil dan keamanan akun Anda.</p>
     </div>
 
+    @if(session('success'))
+        <div class="p-4 bg-green-50 border border-green-200 text-green-700 text-sm rounded-2xl font-bold">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if($errors->any())
+        <div class="p-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-2xl font-bold">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
     <div class="bg-white rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.04)] border border-slate-100 p-8">
-        <form action="#" method="POST" class="space-y-6">
+        <form action="{{ route('admin.pengaturan.update') }}" method="POST" class="space-y-6">
             @csrf
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap</label>
-                <input type="text" name="name" value="{{ auth()->user()->name ?? 'Admin Kasir' }}" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                <input type="text" name="name" value="{{ auth()->user()->name ?? 'Admin Kasir' }}" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
             </div>
             
             <div>
                 <label class="block text-sm font-bold text-slate-700 mb-2">Email Akun</label>
-                <input type="email" name="email" value="{{ auth()->user()->email ?? 'kasir@dvbarra.com' }}" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                <input type="email" name="email" value="{{ auth()->user()->email ?? 'kasir@dvbarra.com' }}" required class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
             </div>
 
             <hr class="border-slate-100 my-6">

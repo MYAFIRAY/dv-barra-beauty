@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class PengaturanController extends Controller
 {
@@ -11,13 +13,12 @@ class PengaturanController extends Controller
     // =======================================
     public function index()
     {
-        // Memanggil file grid menu 6 kotak yang ada di dalam folder admin/pengaturan/owner/
-        return view('admin.pengaturan.owner.index'); 
+        return view('admin.pengaturan.owner.index');
     }
 
     public function update(Request $request)
     {
-        return redirect()->back()->with('success', 'Pengaturan owner diperbarui!');
+        return $this->simpanAkun($request, 'Pengaturan owner diperbarui!');
     }
 
     // =======================================
@@ -27,6 +28,54 @@ class PengaturanController extends Controller
     {
         // Memanggil form profil simpel milik Kasir
         return view('admin.pengaturan.index');
+    }
+
+    public function adminUpdate(Request $request)
+    {
+        return $this->simpanAkun($request, 'Profil dan sandi kasir berhasil diperbarui!');
+    }
+
+    // =======================================
+    // FUNGSI SIMPAN PROFIL & SANDI KE DATABASE
+    // =======================================
+    private function simpanAkun(Request $request, string $pesanSukses)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        if ($request->filled('name')) {
+            $user->name = $request->name;
+        }
+
+        if ($request->filled('email')) {
+            $request->validate([
+                'email' => 'required|email|unique:users,email,' . $user->id,
+            ]);
+            $user->email = $request->email;
+        }
+
+        if ($request->filled('password')) {
+            // Jika form menyertakan input current_password (dari halaman Keamanan Owner)
+            if ($request->has('current_password')) {
+                $request->validate([
+                    'current_password' => 'required',
+                    'password'         => 'required|min:6|confirmed',
+                ], [
+                    'password.confirmed' => 'Konfirmasi password baru tidak cocok.',
+                    'password.min'       => 'Password baru minimal 6 karakter.',
+                ]);
+
+                if (!Hash::check($request->current_password, $user->password)) {
+                    return back()->withErrors(['current_password' => 'Password lama yang Anda masukkan salah.']);
+                }
+            }
+
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', $pesanSukses);
     }
 
     // =======================================
