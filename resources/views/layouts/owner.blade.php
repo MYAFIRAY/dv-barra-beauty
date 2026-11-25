@@ -15,10 +15,104 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style> 
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; } 
-        @media print { .no-print { display: none !important; } body { background: white; } }
-    </style>
+   
+<style>
+    body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #f8fafc;
+    }
+
+    /* Pengaturan khusus cetak laporan Owner */
+    @page {
+        size: A4 portrait;
+        margin: 12mm;
+    }
+
+    @media print {
+
+        /* Berlaku khusus halaman yang memiliki print-area */
+        body:has(.print-area) {
+            display: block !important;
+            height: auto !important;
+            min-height: 0 !important;
+            overflow: visible !important;
+            background: white !important;
+            color: #1e293b !important;
+        }
+
+        /* Sembunyikan sidebar */
+        body:has(.print-area) aside {
+            display: none !important;
+        }
+
+        /* Hilangkan pembatas tinggi konten */
+        body:has(.print-area) > div {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        /* Hilangkan scrollbar dan padding dashboard */
+        body:has(.print-area) main {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        /* Sembunyikan tombol, filter, dan elemen no-print */
+        .no-print {
+            display: none !important;
+        }
+
+        /* Area laporan */
+        .print-area {
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .print-area > div {
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
+        }
+
+        /* Tabel laporan */
+        .print-area table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            font-size: 10pt !important;
+        }
+
+        .print-area thead {
+            display: table-header-group;
+        }
+
+        .print-area tr {
+            page-break-inside: avoid;
+            break-inside: avoid;
+        }
+
+        .print-area th,
+        .print-area td {
+            padding: 8px 6px !important;
+            border-bottom: 1px solid #cbd5e1 !important;
+        }
+
+        /* Pertahankan warna saat dicetak */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+    }
+</style>
+
 </head>
 <body class="text-slate-800 antialiased flex h-screen overflow-hidden">
 

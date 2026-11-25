@@ -14,9 +14,7 @@
                 <a href="{{ route('owner.dashboard') }}" class="px-3 py-2 bg-slate-100 text-slate-500 font-bold text-xs rounded-xl hover:bg-slate-200">Reset</a>
             @endif
         </form>
-        <button onclick="window.print()" class="text-xs font-bold text-dv-main bg-dv-bg hover:bg-dv-main hover:text-white px-4 py-2.5 rounded-xl transition-all flex items-center gap-2">
-            Cetak PDF
-        </button>
+        
     </div>
 
     <!-- Kartu Statistik Utama -->
